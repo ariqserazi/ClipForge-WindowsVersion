@@ -1,0 +1,246 @@
+:root {
+  color-scheme: dark;
+  --bg: #091117;
+  --bg-accent: #0f1b24;
+  --panel: #12212c;
+  --panel-soft: #162836;
+  --panel-strong: #1b3142;
+  --border: rgba(148, 163, 184, 0.22);
+  --border-strong: rgba(125, 211, 252, 0.22);
+  --text: #e5edf5;
+  --muted: #8ea4b6;
+  --gold: #f4b75f;
+  --cyan: #69c6f2;
+  --danger: #fda4af;
+  --shadow: 0 20px 40px rgba(0, 0, 0, 0.24);
+  --radius-lg: 18px;
+  --radius-md: 12px;
+  --radius-sm: 10px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+  background:
+    radial-gradient(circle at top, rgba(105, 198, 242, 0.08), transparent 32%),
+    linear-gradient(180deg, #081018 0%, #0b141c 100%);
+  color: var(--text);
+  font-family: "Avenir Next", "Helvetica Neue", "Segoe UI", sans-serif;
+}
+
+body {
+  padding: 18px;
+}
+
+.app-shell {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.hero,
+.card {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: linear-gradient(180deg, rgba(18, 33, 44, 0.96), rgba(12, 23, 31, 0.96));
+  box-shadow: var(--shadow);
+}
+
+.hero {
+  padding: 20px 20px 18px;
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: rgba(244, 183, 95, 0.12);
+  color: var(--gold);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.hero h1 {
+  margin: 12px 0 6px;
+  font-size: 28px;
+  line-height: 1.1;
+  font-weight: 700;
+}
+
+.hero p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.card {
+  padding: 18px;
+}
+
+.section-title {
+  margin: 0 0 14px;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.field-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+}
+
+.field-row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 10px;
+  align-items: end;
+}
+
+.field-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.field-grid.two-column {
+  grid-template-columns: 1fr 1fr;
+}
+
+label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+input {
+  width: 100%;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 12px 13px;
+  background: rgba(5, 12, 18, 0.58);
+  color: var(--text);
+  font: inherit;
+  outline: none;
+}
+
+input:focus {
+  border-color: rgba(105, 198, 242, 0.7);
+  box-shadow: 0 0 0 3px rgba(105, 198, 242, 0.14);
+}
+
+button {
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  padding: 11px 14px;
+  color: var(--text);
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 120ms ease, border-color 120ms ease, opacity 120ms ease;
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.browse-button,
+.secondary-button {
+  background: rgba(22, 40, 54, 0.95);
+  border-color: var(--border);
+}
+
+.primary-button {
+  background: linear-gradient(180deg, #2385b6, #166183);
+  border-color: rgba(105, 198, 242, 0.45);
+}
+
+.import-button {
+  background: linear-gradient(180deg, #8b6330, #6e4d23);
+  border-color: rgba(244, 183, 95, 0.45);
+}
+
+.button-row {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+}
+
+.status-box {
+  display: flex;
+  align-items: center;
+  min-height: 48px;
+  padding: 12px 14px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-strong);
+  background: linear-gradient(180deg, rgba(14, 29, 39, 0.9), rgba(10, 19, 27, 0.9));
+}
+
+.status-label {
+  color: var(--muted);
+  font-size: 12px;
+  margin-bottom: 8px;
+}
+
+.status-text {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.log-card {
+  padding-bottom: 12px;
+}
+
+.log-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.log-output {
+  min-height: 260px;
+  max-height: 340px;
+  overflow: auto;
+  padding: 14px;
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(148, 163, 184, 0.16);
+  background: rgba(3, 8, 13, 0.72);
+  font-family: "SFMono-Regular", "Menlo", "Consolas", monospace;
+  font-size: 12px;
+  line-height: 1.5;
+  white-space: pre-wrap;
+}
+
+.log-line {
+  color: #d8e2eb;
+}
+
+.log-line:empty {
+  min-height: 1.2em;
+}
+
+.footnote {
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.5;
+  margin: 0;
+}
+
+@media (min-width: 720px) {
+  .button-row {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+}

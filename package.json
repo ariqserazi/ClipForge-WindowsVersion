@@ -1,0 +1,14 @@
+{
+  "name": "clipforge-windows",
+  "version": "1.0.0",
+  "private": true,
+  "description": "A Windows-only Adobe Premiere Pro CEP extension for generating random broll clips with ffmpeg.",
+  "scripts": {
+    "install:win": "powershell -ExecutionPolicy Bypass -File scripts/install-windows.ps1",
+    "debug:win": "powershell -ExecutionPolicy Bypass -File scripts/enable-cep-debug-windows.ps1",
+    "installer:win": "powershell -ExecutionPolicy Bypass -File scripts/build-installer-windows.ps1",
+    "validate": "node scripts/validate.mjs",
+    "zip": "node scripts/zip.mjs"
+  },
+  "license": "MIT"
+}

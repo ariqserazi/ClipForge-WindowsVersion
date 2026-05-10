@@ -1,0 +1,90 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ClipForge</title>
+    <link rel="stylesheet" href="./src/styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="hero">
+        <div class="eyebrow">Premiere Pro CEP Panel</div>
+        <h1>ClipForge</h1>
+        <p>Random broll clip generator for Premiere Pro</p>
+      </section>
+
+      <section class="card">
+        <h2 class="section-title">Clip Source</h2>
+        <div class="field-grid">
+          <div class="field-row">
+            <div class="field-group">
+              <label for="inputFolder">Input Folder</label>
+              <input id="inputFolder" type="text" placeholder="C:\Users\YourName\Videos" />
+            </div>
+            <button id="inputBrowseButton" class="browse-button" type="button">Browse</button>
+          </div>
+
+          <div class="field-row">
+            <div class="field-group">
+              <label for="outputFolder">Output Folder</label>
+              <input id="outputFolder" type="text" placeholder="C:\Users\YourName\Desktop\ClipForge Output" />
+            </div>
+            <button id="outputBrowseButton" class="browse-button" type="button">Browse</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2 class="section-title">Generation Settings</h2>
+        <div class="field-grid two-column">
+          <div class="field-group">
+            <label for="clipCount">Clip Count</label>
+            <input id="clipCount" type="number" min="1" step="1" />
+          </div>
+          <div class="field-group">
+            <label for="clipLength">Clip Length (Seconds)</label>
+            <input id="clipLength" type="number" min="1" step="1" />
+          </div>
+          <div class="field-group">
+            <label for="skipFirstSeconds">Skip First Seconds</label>
+            <input id="skipFirstSeconds" type="number" min="0" step="1" />
+          </div>
+          <div class="field-group">
+            <label for="skipLastSeconds">Skip Last Seconds</label>
+            <input id="skipLastSeconds" type="number" min="0" step="1" />
+          </div>
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="button-row">
+          <button id="generateButton" class="primary-button" type="button">Generate Clips</button>
+          <button id="importButton" class="import-button" type="button">Import Generated Clips</button>
+          <button id="clearLogButton" class="secondary-button" type="button">Clear Log</button>
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="status-label">Status</div>
+        <div class="status-box">
+          <p id="statusText" class="status-text">Starting…</p>
+        </div>
+      </section>
+
+      <section class="card log-card">
+        <div class="log-header">
+          <h2 class="section-title">Panel Log</h2>
+        </div>
+        <div id="logOutput" class="log-output" aria-live="polite"></div>
+      </section>
+
+      <p class="footnote">
+        ClipForge never modifies source videos. Generated clips are written only to the selected output folder.
+      </p>
+    </main>
+
+    <script src="./lib/CSInterface.js"></script>
+    <script src="./src/main.js"></script>
+  </body>
+</html>

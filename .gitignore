@@ -1,0 +1,12 @@
+node_modules
+.DS_Store
+*.zip
+dist/
+installer/output/
+*.exe
+clips
+*.mp4
+*.mov
+*.mkv
+*.avi
+*.m4v
