@@ -13,7 +13,7 @@ Before installing ClipForge, you need:
 1. Windows 10 or Windows 11
 2. Adobe Premiere Pro
 3. Node.js
-4. ffmpeg
+4. ffmpeg and ffprobe
 
 You only need Inno Setup if you want to build the `.exe` installer yourself.
 
@@ -41,22 +41,54 @@ If you do not see it there, try:
 Window > Extensions Legacy > ClipForge
 ```
 
-## Step 1: Install ffmpeg
+## Step 1: Check ffmpeg
 
-ClipForge needs two files:
+ClipForge needs two helper programs:
 
 ```text
 ffmpeg.exe
 ffprobe.exe
 ```
 
-The easiest install option is usually winget:
+These are not part of Premiere Pro. They are separate video tools.
+
+First, check if you already have them.
+
+Open PowerShell and run:
+
+```powershell
+ffmpeg -version
+ffprobe -version
+```
+
+If both commands show version information, you are done with this step.
+
+If PowerShell says something like this:
+
+```text
+The term 'ffmpeg' is not recognized
+```
+
+then Windows cannot find ffmpeg yet. Use one of the install options below.
+
+## Step 1A: Install ffmpeg If Needed
+
+The easiest option is usually this PowerShell command:
 
 ```powershell
 winget install Gyan.FFmpeg
 ```
 
-Other options:
+After it finishes, close PowerShell, open PowerShell again, and check:
+
+```powershell
+ffmpeg -version
+ffprobe -version
+```
+
+If both commands show version information, you are good.
+
+Other install options:
 
 ```powershell
 choco install ffmpeg
@@ -66,27 +98,38 @@ choco install ffmpeg
 scoop install ffmpeg
 ```
 
-Manual option:
+## Step 1B: If You Already Have ffmpeg Somewhere
 
-1. Download a Windows build of ffmpeg.
-2. Put it here:
+If your computer already has ffmpeg, ClipForge can use it.
+
+The important thing is that ClipForge must be able to find both files:
 
 ```text
-C:\ffmpeg\bin
+ffmpeg.exe
+ffprobe.exe
 ```
 
-3. Make sure these files exist:
+The simplest fix is to put them here:
 
 ```text
 C:\ffmpeg\bin\ffmpeg.exe
 C:\ffmpeg\bin\ffprobe.exe
 ```
 
-ClipForge checks these places:
+So the folder should look like this:
 
 ```text
-ffmpeg.exe from PATH
-ffprobe.exe from PATH
+C:\ffmpeg\bin
+  ffmpeg.exe
+  ffprobe.exe
+```
+
+If your ffmpeg is installed somewhere else, add that folder to your Windows `PATH`.
+
+ClipForge looks in these places:
+
+```text
+Windows PATH
 C:\ffmpeg\bin
 C:\Program Files\ffmpeg\bin
 C:\Program Files (x86)\ffmpeg\bin
@@ -338,16 +381,44 @@ Then restart Premiere Pro.
 
 ClipForge could not find `ffmpeg.exe` or `ffprobe.exe`.
 
-Fix it by doing one of these:
+First, open PowerShell and check:
 
-1. Install ffmpeg with winget:
+```powershell
+ffmpeg -version
+ffprobe -version
+```
+
+If either command fails, ClipForge will not work yet.
+
+Fix it with the easiest option:
 
 ```powershell
 winget install Gyan.FFmpeg
 ```
 
-2. Add ffmpeg to your Windows `PATH`.
-3. Install ffmpeg manually at:
+Then close PowerShell, open it again, and check:
+
+```powershell
+ffmpeg -version
+ffprobe -version
+```
+
+If you already downloaded ffmpeg, make sure the files are here:
+
+```text
+C:\ffmpeg\bin\ffmpeg.exe
+C:\ffmpeg\bin\ffprobe.exe
+```
+
+The main rule is simple:
+
+```text
+ClipForge needs both ffmpeg.exe and ffprobe.exe.
+```
+
+If you only have `ffmpeg.exe`, it is not enough.
+
+If your files are in a different folder, add that folder to your Windows `PATH`, or move/copy them to:
 
 ```text
 C:\ffmpeg\bin
