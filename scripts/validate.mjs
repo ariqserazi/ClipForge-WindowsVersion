@@ -7,6 +7,7 @@ const requiredFiles = [
   ".debug",
   ".gitignore",
   "CSXS/manifest.xml",
+  "Install-ClipForge-Windows.bat",
   "assets/icons/icon-dark.svg",
   "assets/icons/icon-light.svg",
   "index.html",
@@ -20,6 +21,7 @@ const requiredFiles = [
   "scripts/build-installer-windows.ps1",
   "scripts/enable-cep-debug-windows.ps1",
   "scripts/install-windows.ps1",
+  "scripts/setup-windows.ps1",
   "scripts/validate.mjs",
   "scripts/zip.mjs",
   "src/main.js",
@@ -34,7 +36,7 @@ for (const relativeFile of requiredFiles) {
 }
 
 const packageJson = JSON.parse(fs.readFileSync(path.join(root, "package.json"), "utf8"))
-for (const scriptName of ["install:win", "debug:win", "installer:win", "validate", "zip"]) {
+for (const scriptName of ["setup:win", "install:win", "debug:win", "installer:win", "validate", "zip"]) {
   if (!packageJson.scripts || !packageJson.scripts[scriptName]) {
     throw new Error(`package.json must include the ${scriptName} script.`)
   }
@@ -80,6 +82,7 @@ for (const needle of [
 
 for (const needle of [
   "Windows-only",
+  "Install-ClipForge-Windows.bat",
   "%APPDATA%\\Adobe\\CEP\\extensions\\ClipForge",
   "npm run debug:win",
   "npm run install:win",

@@ -4,6 +4,7 @@
   "private": true,
   "description": "A Windows-only Adobe Premiere Pro CEP extension for generating random broll clips with ffmpeg.",
   "scripts": {
+    "setup:win": "powershell -ExecutionPolicy Bypass -File scripts/setup-windows.ps1",
     "install:win": "powershell -ExecutionPolicy Bypass -File scripts/install-windows.ps1",
     "debug:win": "powershell -ExecutionPolicy Bypass -File scripts/enable-cep-debug-windows.ps1",
     "installer:win": "powershell -ExecutionPolicy Bypass -File scripts/build-installer-windows.ps1",

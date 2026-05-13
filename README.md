@@ -6,20 +6,62 @@ It takes videos from a folder, makes random short b roll clips with `ffmpeg`, an
 
 This is a Premiere Pro CEP extension. It is not Electron, UXP, a desktop app, or a website.
 
+## Easiest Install
+
+For most people, this is the only thing they should do:
+
+1. Download this repo.
+2. Unzip it.
+3. Open the folder.
+4. Double-click this file:
+
+```text
+Install-ClipForge-Windows.bat
+```
+
+That file tries to do everything:
+
+- install ffmpeg if Windows does not already have it
+- enable Premiere Pro extension support
+- copy ClipForge into the correct Premiere Pro folder
+
+When it finishes, restart Premiere Pro.
+
+Then open ClipForge from:
+
+```text
+Window > Extensions > ClipForge
+```
+
+If you do not see it there, try:
+
+```text
+Window > Extensions Legacy > ClipForge
+```
+
 ## What You Need
 
-Before installing ClipForge, you need:
+The one-click installer expects:
 
 1. Windows 10 or Windows 11
 2. Adobe Premiere Pro
-3. Node.js
-4. ffmpeg and ffprobe
+3. Internet access if ffmpeg needs to be installed
+
+You do not need Node.js for the one-click installer.
+
+You only need Node.js if you want to run the development commands yourself.
 
 You only need Inno Setup if you want to build the `.exe` installer yourself.
 
-## Fast Install
+## Command Line Install
 
-Open PowerShell in this project folder and run these commands:
+If you prefer PowerShell, open PowerShell in this project folder and run:
+
+```powershell
+npm run setup:win
+```
+
+Or run the manual commands one by one:
 
 ```powershell
 npm run validate
@@ -272,6 +314,12 @@ The installer installs ClipForge to:
 It can also enable CEP debug mode during install.
 
 ## Useful Commands
+
+Do everything:
+
+```powershell
+npm run setup:win
+```
 
 Check the project:
 
