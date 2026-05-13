@@ -1,86 +1,114 @@
 # ClipForge-Windows
 
-ClipForge-Windows is a Windows-only Adobe Premiere Pro CEP extension that generates random short b roll clips from local video files with `ffmpeg` and `ffprobe`, then optionally imports the generated clips into the current Premiere Pro project.
+ClipForge-Windows is a Windows-only Adobe Premiere Pro extension.
 
-This project is intentionally a CEP extension. It is not Electron, UXP, a desktop app, a web app, or a server project.
+It takes videos from a folder, makes random short b roll clips with `ffmpeg`, and can import those clips into Premiere Pro.
 
-## Features
+This is a Premiere Pro CEP extension. It is not Electron, UXP, a desktop app, or a website.
 
-- Windows-only Premiere Pro CEP panel
-- Select an input folder of source videos
-- Select or enter an output folder
-- Generate random silent H.264 `.mp4` b roll clips
-- Optionally import generated clips into Premiere Pro
-- Safe output names like `broll_0001.mp4`
-- Case-insensitive input support for `.mp4`, `.mkv`, `.mov`, `.avi`, and `.m4v`
-- Windows path support for drive letters, backslashes, and spaces
+## What You Need
 
-Default generation behavior:
+Before installing ClipForge, you need:
 
-- `30` clips
-- `6` seconds each
-- skip the first `90` seconds
-- skip the last `90` seconds
-- write silent H.264 `.mp4` files
+1. Windows 10 or Windows 11
+2. Adobe Premiere Pro
+3. Node.js
+4. ffmpeg
 
-## Requirements
+You only need Inno Setup if you want to build the `.exe` installer yourself.
 
-- Windows 10 or Windows 11
-- Adobe Premiere Pro with CEP or Extensions Legacy support
-- `ffmpeg.exe` and `ffprobe.exe`
-- Node.js for validation and helper scripts
-- Inno Setup 6 only if building the installer
+## Fast Install
 
-## Install ffmpeg
+Open PowerShell in this project folder and run these commands:
 
-Use one of these Windows install options.
+```powershell
+npm run validate
+npm run debug:win
+npm run install:win
+```
 
-With winget:
+Then restart Premiere Pro.
+
+Open ClipForge in Premiere Pro from:
+
+```text
+Window > Extensions > ClipForge
+```
+
+If you do not see it there, try:
+
+```text
+Window > Extensions Legacy > ClipForge
+```
+
+## Step 1: Install ffmpeg
+
+ClipForge needs two files:
+
+```text
+ffmpeg.exe
+ffprobe.exe
+```
+
+The easiest install option is usually winget:
 
 ```powershell
 winget install Gyan.FFmpeg
 ```
 
-With Chocolatey:
+Other options:
 
 ```powershell
 choco install ffmpeg
 ```
 
-With Scoop:
-
 ```powershell
 scoop install ffmpeg
 ```
 
-Manual install:
+Manual option:
 
-1. Download a Windows ffmpeg build.
-2. Extract it so the tools live at `C:\ffmpeg\bin`.
-3. Confirm these files exist:
+1. Download a Windows build of ffmpeg.
+2. Put it here:
+
+```text
+C:\ffmpeg\bin
+```
+
+3. Make sure these files exist:
 
 ```text
 C:\ffmpeg\bin\ffmpeg.exe
 C:\ffmpeg\bin\ffprobe.exe
 ```
 
-ClipForge-Windows checks `ffmpeg.exe` and `ffprobe.exe` from `PATH`, then:
+ClipForge checks these places:
 
 ```text
+ffmpeg.exe from PATH
+ffprobe.exe from PATH
 C:\ffmpeg\bin
 C:\Program Files\ffmpeg\bin
 C:\Program Files (x86)\ffmpeg\bin
 ```
 
-## Enable CEP Debug Mode
+## Step 2: Enable Premiere Pro Debug Mode
 
-Unsigned CEP extensions require Adobe debug mode. Run:
+Premiere Pro blocks unsigned CEP extensions unless debug mode is enabled.
+
+Run:
 
 ```powershell
 npm run debug:win
 ```
 
-This creates or updates:
+This sets:
+
+```text
+PlayerDebugMode = "1"
+```
+
+For these registry keys:
 
 ```text
 HKCU\Software\Adobe\CSXS.11
@@ -88,121 +116,215 @@ HKCU\Software\Adobe\CSXS.12
 HKCU\Software\Adobe\CSXS.13
 ```
 
-Each key receives:
+You only need to do this once.
 
-```text
-PlayerDebugMode = "1"
-```
+## Step 3: Install ClipForge
 
-Restart Premiere Pro after enabling debug mode.
-
-## Manual Extension Install
-
-Recommended per-user install path:
-
-```text
-%APPDATA%\Adobe\CEP\extensions\ClipForge
-```
-
-Install with:
+Run:
 
 ```powershell
 npm run install:win
 ```
 
-System-level alternatives are available, but usually require admin permissions:
+This copies ClipForge to:
+
+```text
+%APPDATA%\Adobe\CEP\extensions\ClipForge
+```
+
+This is the recommended install location because it does not need administrator permission.
+
+After installing, restart Premiere Pro.
+
+## Step 4: Open ClipForge
+
+In Premiere Pro, open:
+
+```text
+Window > Extensions > ClipForge
+```
+
+If that menu does not show ClipForge, try:
+
+```text
+Window > Extensions Legacy > ClipForge
+```
+
+## How To Use ClipForge
+
+1. Open ClipForge in Premiere Pro.
+2. Choose an input folder with your source videos.
+3. Choose an output folder for the generated clips.
+4. Leave the default settings or adjust them.
+5. Click `Generate Clips`.
+6. Wait for the clips to finish.
+7. Click `Import Generated Clips` if you want them imported into Premiere Pro.
+
+ClipForge does not edit or delete your source videos.
+
+## Default Clip Settings
+
+By default, ClipForge creates:
+
+- `30` clips
+- `6` seconds per clip
+- no audio
+- H.264 `.mp4` files
+- filenames like `broll_0001.mp4`
+- clips that skip the first `90` seconds of each source video
+- clips that skip the last `90` seconds of each source video
+
+Supported input files:
+
+```text
+.mp4
+.mkv
+.mov
+.avi
+.m4v
+```
+
+Uppercase extensions also work, like `.MP4`, `.MOV`, and `.MKV`.
+
+## Good Folder Examples
+
+These are valid Windows paths:
+
+```text
+C:\Users\YourName\Videos
+D:\Anime Clips\Input
+C:\Users\YourName\Desktop\ClipForge Output
+```
+
+Paths with spaces are okay.
+
+## Build The Windows Installer
+
+Only do this if you want to create the installer `.exe`.
+
+Install Inno Setup 6 first:
+
+```text
+https://jrsoftware.org/isinfo.php
+```
+
+Then run:
+
+```powershell
+npm run installer:win
+```
+
+The installer will be created here:
+
+```text
+dist\ClipForge-Windows-Setup.exe
+```
+
+The installer installs ClipForge to:
+
+```text
+%APPDATA%\Adobe\CEP\extensions\ClipForge
+```
+
+It can also enable CEP debug mode during install.
+
+## Useful Commands
+
+Check the project:
+
+```powershell
+npm run validate
+```
+
+Enable Premiere Pro debug mode:
+
+```powershell
+npm run debug:win
+```
+
+Install ClipForge:
+
+```powershell
+npm run install:win
+```
+
+Build the installer:
+
+```powershell
+npm run installer:win
+```
+
+## Manual Install
+
+Use this only if the install script does not work.
+
+1. Press `Win + R`.
+2. Paste this:
+
+```text
+%APPDATA%\Adobe\CEP\extensions
+```
+
+3. Press Enter.
+4. Create the `extensions` folder if it does not exist.
+5. Copy this project folder into that folder.
+6. Rename the copied folder to:
+
+```text
+ClipForge
+```
+
+7. Make sure this file exists:
+
+```text
+%APPDATA%\Adobe\CEP\extensions\ClipForge\CSXS\manifest.xml
+```
+
+8. Run:
+
+```powershell
+npm run debug:win
+```
+
+9. Restart Premiere Pro.
+
+## Other Install Locations
+
+The recommended location is:
+
+```text
+%APPDATA%\Adobe\CEP\extensions\ClipForge
+```
+
+These can also work, but usually need administrator permission:
 
 ```text
 C:\Program Files\Common Files\Adobe\CEP\extensions\ClipForge
 C:\Program Files (x86)\Common Files\Adobe\CEP\extensions\ClipForge
 ```
 
-Manual fallback:
-
-1. Create `%APPDATA%\Adobe\CEP\extensions`.
-2. Copy this extension folder into that directory.
-3. Make sure the installed folder is named `ClipForge`.
-4. Confirm `CSXS\manifest.xml` is directly inside the installed `ClipForge` folder.
-5. Run `npm run debug:win`.
-6. Restart Premiere Pro.
-
-## Windows Installer
-
-Build the Inno Setup installer with:
-
-```powershell
-npm run installer:win
-```
-
-The installer is written to:
-
-```text
-dist\ClipForge-Windows-Setup.exe
-```
-
-The installer:
-
-- installs to `%APPDATA%\Adobe\CEP\extensions\ClipForge`
-- does not require admin permissions by default
-- can optionally enable CEP debug mode
-- tells the user to restart Premiere Pro when installation finishes
-
-The uninstaller removes only:
-
-```text
-%APPDATA%\Adobe\CEP\extensions\ClipForge
-```
-
-It does not delete user video files, generated clips, ffmpeg, Premiere files, or unrelated Adobe folders.
-
-## Open In Premiere Pro
-
-After installing and restarting Premiere Pro, open:
-
-```text
-Window > Extensions > ClipForge
-```
-
-If your Premiere Pro version labels CEP panels as legacy, use:
-
-```text
-Window > Extensions Legacy > ClipForge
-```
-
-## Development
-
-Run validation:
-
-```powershell
-npm run validate
-```
-
-Create a distributable zip:
-
-```powershell
-npm run zip
-```
-
-Useful Windows commands:
-
-```powershell
-npm run validate
-npm run debug:win
-npm run install:win
-npm run installer:win
-```
+Use the AppData location first.
 
 ## Troubleshooting
 
-### Panel does not appear
+### ClipForge Does Not Show Up In Premiere Pro
 
-- Confirm the installed folder is `%APPDATA%\Adobe\CEP\extensions\ClipForge`.
-- Confirm `CSXS\manifest.xml` exists inside that folder.
-- Run `npm run debug:win`.
-- Fully quit and restart Premiere Pro.
-- Check `Window > Extensions` and `Window > Extensions Legacy`.
+Try these in order:
 
-### Unsigned extension is not enabled
+1. Restart Premiere Pro.
+2. Check `Window > Extensions`.
+3. Check `Window > Extensions Legacy`.
+4. Run `npm run debug:win`.
+5. Run `npm run install:win`.
+6. Restart Premiere Pro again.
+
+Also check that this file exists:
+
+```text
+%APPDATA%\Adobe\CEP\extensions\ClipForge\CSXS\manifest.xml
+```
+
+### Premiere Says The Extension Is Unsigned
 
 Run:
 
@@ -212,59 +334,89 @@ npm run debug:win
 
 Then restart Premiere Pro.
 
-### Wrong CEP folder
+### ffmpeg Not Found
 
-Use the per-user path first:
+ClipForge could not find `ffmpeg.exe` or `ffprobe.exe`.
 
-```text
-%APPDATA%\Adobe\CEP\extensions\ClipForge
+Fix it by doing one of these:
+
+1. Install ffmpeg with winget:
+
+```powershell
+winget install Gyan.FFmpeg
 ```
 
-The system-level folders can work, but they usually require admin permissions.
+2. Add ffmpeg to your Windows `PATH`.
+3. Install ffmpeg manually at:
 
-### ffmpeg not found
+```text
+C:\ffmpeg\bin
+```
 
-- Install ffmpeg.
-- Add the ffmpeg `bin` folder to `PATH`.
-- Or install it at `C:\ffmpeg\bin`.
-- Confirm both `ffmpeg.exe` and `ffprobe.exe` are available.
+### No Clips Were Created
 
-### Paths with spaces
+Check these things:
 
-ClipForge-Windows calls ffmpeg and ffprobe with argument arrays, so paths like these are supported:
+- Your input folder has videos in it.
+- The videos are one of the supported formats.
+- The videos are long enough.
+- Your output folder exists or can be created.
+- ffmpeg is installed correctly.
+
+Very short videos may be skipped because ClipForge avoids the first and last `90` seconds by default.
+
+### Import Into Premiere Failed
+
+Make sure:
+
+- ClipForge is open inside Premiere Pro.
+- A Premiere Pro project is open.
+- The generated clips still exist in the output folder.
+
+### Paths With Spaces Are Not Working
+
+Paths with spaces should work. For example:
 
 ```text
 D:\Anime Clips\Input
 C:\Users\YourName\Desktop\ClipForge Output
 ```
 
-If a path fails, verify the folder exists and that Premiere Pro can access it.
+If a path fails, check that the folder actually exists and that Premiere Pro has permission to access it.
 
-### Premiere needs restart
+### Inno Setup Not Found
 
-Premiere Pro scans CEP extensions when it starts. Restart Premiere Pro after installing, uninstalling, or changing debug mode.
+This only matters if you are building the installer.
 
-### Inno Setup not found
+Install Inno Setup 6:
 
-Install Inno Setup 6, then run:
+```text
+https://jrsoftware.org/isinfo.php
+```
+
+Then run:
 
 ```powershell
 npm run installer:win
 ```
 
-The build script checks:
+## Safety Notes
+
+ClipForge only writes generated clips to the output folder you choose.
+
+The uninstaller removes only the installed ClipForge extension folder:
 
 ```text
-C:\Program Files (x86)\Inno Setup 6\ISCC.exe
-C:\Program Files\Inno Setup 6\ISCC.exe
+%APPDATA%\Adobe\CEP\extensions\ClipForge
 ```
 
-### Installer built but extension does not appear
+It does not delete:
 
-- Run the installer again and keep CEP debug mode enabled.
-- Confirm `%APPDATA%\Adobe\CEP\extensions\ClipForge\CSXS\manifest.xml` exists.
-- Restart Premiere Pro.
-- Check both Extensions menus.
+- your source videos
+- your generated clips
+- ffmpeg
+- Premiere Pro projects
+- unrelated Adobe folders
 
 ## License
 
