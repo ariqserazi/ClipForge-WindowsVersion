@@ -6,6 +6,14 @@ It takes videos from a folder, makes random short b roll clips with `ffmpeg`, an
 
 This is a Premiere Pro CEP extension. It is not Electron, UXP, a desktop app, or a website.
 
+Want the Mac version instead?
+
+Go here:
+
+```text
+https://github.com/ariqserazi/ClipForge
+```
+
 ## Easiest Install
 
 For most people, this is the only thing they should do:

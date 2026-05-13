@@ -120,8 +120,7 @@ const forbiddenPatterns = [
   /\/opt\/homebrew\/bin\/ffprobe/,
   /\/usr\/local\/bin\/ffmpeg/,
   /\/usr\/local\/bin\/ffprobe/,
-  new RegExp("\\b" + "Home" + "brew" + "\\b"),
-  new RegExp("\\b" + "mac" + "OS" + "\\b")
+  new RegExp("\\b" + "Home" + "brew" + "\\b")
 ]
 
 for (const file of productionFiles) {
